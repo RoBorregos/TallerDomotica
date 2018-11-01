@@ -74,20 +74,5 @@ void setup() {
 }
 
 void loop() {
-   // Revisar si se detecto un ladron 
-  ladronDetectado = detectarLadron() || ladronDetectado; //Si ya se activo la alarma seguir sonando
-  if(ladronDetectado){
-    suenaBocina(1000);
-    prenderLuces();
-   }
-  if(!alertaEnviada){ //Solamente enviar la alertta si no se ha enviado antes
-     if(enviarAlerta()){
-        alertaEnviada=true; 
-      }
-     else{
-      Serial.println("No se envio la alerta");
-      }
-    }
- 
     
 }
