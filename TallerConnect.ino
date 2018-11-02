@@ -4,6 +4,8 @@
  * buzzer  pin 9 digital
  * signalIR pin A0 Analogico
  * botonDePanico pin 10 digital
+   Trigger pin 2 digital
+   Echo pin 3 analogico
  */
 #define pinFoco1 5
 #define pinFoco2 6
