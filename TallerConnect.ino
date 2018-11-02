@@ -5,7 +5,7 @@
  * signalIR pin A0 Analogico
  * botonDePanico pin 10 digital
    Trigger pin 2 digital
-   Echo pin 3 analogico
+   Echo pin 3 digital
  */
 #define pinFoco1 5
 #define pinFoco2 6
