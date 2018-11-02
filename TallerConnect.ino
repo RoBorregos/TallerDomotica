@@ -10,6 +10,8 @@
 #define buzzer 9
 #define signalIR A0
 #define botonDePanico 10
+#define Trigger 2   //Pin digital 2 para el Trigger del sensor
+#define Echo 3
 
 //Variables globales
 double distanciaInicial;
@@ -32,9 +34,16 @@ void suenaBocina(int frecuencia){
 
 //Regresa un double con el valor de la distancia detectad
 double getDistance(){
-  double voltaje = analogRead(signalIR) * (5/1024); // Cambiar el valor de 0-1024 a un voltaje para sacar la distancia
-  double distancia = 13*pow(voltaje,-1); //datasheet
-  return distancia;
+  double t; //timepo que demora en llegar el eco
+  double d; //distancia en centimetros
+
+  digitalWrite(Trigger, HIGH);
+  delayMicroseconds(10);          //Enviamos un pulso de 10us
+  digitalWrite(Trigger, LOW);
+  
+  t = pulseIn(Echo, HIGH); //obtenemos el ancho del pulso
+  d = t/59;  
+  return d;
 }
 
 //Regresa true si se detecto ladron
@@ -59,10 +68,12 @@ void setup() {
   //Entradas
   pinMode(signalIR,INPUT);
   pinMode(botonDePanico, INPUT);
+  pinMode(Echo, INPUT);  //pin como entrada
   //Salidas
   pinMode(pinFoco1,OUTPUT);
   pinMode(pinFoco2, OUTPUT);
   pinMode(buzzer, OUTPUT);
+  pinMode(Trigger, OUTPUT); //pin como salida
   //Inicial comunicacion serial
   Serial.begin(9600);
   //Establecer una  distancia Inicial
@@ -71,6 +82,7 @@ void setup() {
     todDis+= getDistance();
   }
   distanciaInicial=todDis/10; //Promedio de 10 lecturas 
+  digitalWrite(Trigger, LOW);//Inicializamos el pin con 0
 }
 
 void loop() {
